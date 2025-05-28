@@ -146,6 +146,7 @@ print(rekomendasi_user_331`) berdasarkan rating:
      Precision@5: 100.00%
      Recall@5: 100.00%
      ```
+     Interpretasi: Model Content-Based Filtering bekerja sangat baik, terutama untuk game yang memiliki genre spesifik dan konsisten seperti Tekken 7. Untuk game yang memiliki genre lebih luas atau umum seperti Minecraft, sistem tetap memberikan hasil yang baik meskipun precision sedikit lebih rendah. Hal ini bisa disebabkan oleh adanya beberapa game dalam hasil rekomendasi yang mirip namun tidak identik secara genre. Nilai recall juga sempurna pada kedua kasus, maka **rekomendasi cukup relevan**.
 2. Metrik Evaluasi yang digunakan untuk Collaborative Filtering:
    - **MAE (Mean Absolute Error)** : Mengukur rata-rata kesalahan absolut antara nilai aktual dan nilai prediksi. Metrik ini memberikan gambaran langsung seberapa jauh prediksi model dari data sebenarnya secara rata-rata.
 
@@ -163,4 +164,6 @@ Metrik ini sangat berguna untuk membandingkan performa model secara keseluruhan.
      MAE:  0.6192
      Mean Absolute Error (MAE): 0.619192493166767
      ```
+     Interpretasi: Nilai RMSE dan MAE yang rendah menunjukkan bahwa model collaborative filtering memiliki performa prediksi yang cukup baik. Model dapat digunakan secara **efektif untuk memperkirakan preferensi pengguna** terhadap game yang belum mereka rating. Namun model masih bisa ditingkatkan dengan pendekatan lain seperti hybrid untuk mengatasi cold-start.
+     
 **Referensi**:
