@@ -77,29 +77,91 @@ Model yang Digunakan:
      - Tidak bekerja baik untuk pengguna atau item baru (cold-start problem).
      - Bergantung pada jumlah interaksi yang cukup untuk belajar pola.
 
+**Output Top-N Recommendation**:
+1. Content-Based Filtering:
+   - Berikut Top-N rekomendasi game Minecraft berdasarkan kemiripan genre dengan `game_recommendations('Minecraft')`, diperoleh hasil berikut:
+     | **Rank** | **Game Title**                          | **Genre** |
+     | -------- | --------------------------------------- | --------- |
+     | 1        | Animal Crossing: New Horizons           | Adventure |
+     | 2        | Spelunky 2                              | Adventure |
+     | 3        | The Legend of Zelda: Breath of the Wild | Adventure |
+     | 4        | Grand Theft Auto V                      | Adventure |
+     | 5        | Cuphead                                 | Shooter   |
+   - Berikut Top-N rekomendasi game Tekken 7 berdasarkan kemiripan genre dengan `game_recommendations('Tekken 7')`, diperoleh hasil berikut:
+     | **Rank** | **Game Title**                   | **Genre**  |
+     | -------- | -------------------------------- | ---------- |
+     | 1        | Sid Meier’s Civilization VI      | Simulation |
+     | 2        | Red Dead Redemption 2            | Simulation |
+     | 3        | Mario Kart 8 Deluxe              | Simulation |
+     | 4        | Counter-Strike: Global Offensive | Simulation |
+     | 5        | The Elder Scrolls V: Skyrim      | Simulation |
+2. Collaborative Filtering:
+   - Berikut Top-N rekomendasi untuk pengguna 331 (`rekomendasi_user_331 = get_game_recommendations(user_id=331, df=cf_df, model=model)
+print(rekomendasi_user_331`) berdasarkan rating:
+     | **Rank** | **Game Title**                          | **Genre**  |
+     | -------- | --------------------------------------- | ---------- |
+     | 1        | 1000-Piece Puzzle                       | Sports     |
+     | 2        | Fall Guys                               | Strategy   |
+     | 3        | Call of Duty: Modern Warfare 2          | Strategy   |
+     | 4        | The Legend of Zelda: Breath of the Wild | Adventure  |
+     | 5        | Tekken 7                                | Simulation |
+     | 6        | Animal Crossing: New Horizons           | Adventure  |
+     | 7        | Pokémon Scarlet & Violet                | Puzzle     |
+     | 8        | Portal 2                                | Strategy   |
+     | 9        | Tetris                                  | Shooter    |
+     | 10       | Counter-Strike: Global Offensive        | Simulation |
+   - Berikut Top-N rekomendasi untuk pengguna 20 (`rekomendasi_user_20 = get_game_recommendations(user_id=20, df=cf_df, model=model)
+print(rekomendasi_user_331`) berdasarkan rating:
+     | **Rank** | **Game Title**                 | **Genre**  |
+     | -------- | ------------------------------ | ---------- |
+     | 1        | Half-Life: Alyx                | RPG        |
+     | 2        | Just Dance 2024                | Strategy   |
+     | 3        | 1000-Piece Puzzle              | Sports     |
+     | 4        | Street Fighter V               | Fighting   |
+     | 5        | Call of Duty: Modern Warfare 2 | Strategy   |
+     | 6        | Tekken 7                       | Simulation |
+     | 7        | Hitman 3                       | Shooter    |
+     | 8        | League of Legends              | Party      |
+     | 9        | Cuphead                        | Shooter    |
+     | 10       | Tetris                         | Shooter    |
 
 ## Evaluation
-Metrik Evaluasi yang digunakan:
-- MAE (Mean Absolute Error): Mengukur rata-rata kesalahan absolut antara nilai aktual dan nilai prediksi. Metrik ini memberikan gambaran langsung seberapa jauh prediksi model dari data sebenarnya secara rata-rata, tanpa mempertimbangkan arah kesalahan (positif atau negatif). MAE mudah dipahami dan tahan terhadap outlier kecil, tetapi tidak memberikan penalti lebih besar untuk kesalahan besar.
-- MSE (Mean Squared Error): Mengukur rata-rata dari kuadrat selisih antara nilai aktual dan prediksi. Karena selisihnya dikuadratkan, MSE memberikan penalti lebih besar terhadap kesalahan besar. MSE sangat berguna jika kita ingin meminimalkan kesalahan besar dalam model prediksi.
-- RMSE (Root Mean Squared Error): Akar dari MSE dan memiliki satuan yang sama dengan target (traffic volume), sehingga lebih mudah diinterpretasikan dalam konteks dunia nyata. RMSE juga memberikan penalti lebih besar untuk kesalahan prediksi yang besar, dan sering dipakai untuk membandingkan performa model secara umum dalam kasus regresi.
+1. Metrik Evaluasi yang digunakan untuk Content-Based Filtering:
+   - **Precision** : Mengukur seberapa relevan item yang direkomendasikan dari sejumlah `k` rekomendasi teratas. Dalam konteks ini, skor cosine similarity digunakan sebagai ukuran relevansi.
+     
+     $$\text{Precision@k} = \frac{1}{k} \sum_{i=1}^{k} \text{cosine\_sim}(input, item_i)$$
+     
+     Semakin tinggi nilai precision, semakin akurat rekomendasi terhadap preferensi konten dari game input.
+   - **Recall@k** : Mengukur seberapa besar proporsi kemiripan yang berhasil ditangkap dari total kemiripan semua hasil. Ini menggambarkan sejauh mana rekomendasi mencakup konten yang mirip dengan game input.
+     
+     $$\text{Recall@k} = \frac{ \sum_{i=1}^{k} \text{cosine\_sim}(input, item_i) }{ \sum_{j=1}^{n} \text{cosine\_sim}(input, item_j) }$$
+     
+     Jika cosine similarity dari semua hasil sangat tersebar, maka recall membantu memahami seberapa besar bagian dari konten relevan yang berhasil direkomendasikan.
+   - Berikut hasil yang diperoleh dari evaluasi model Content-Based Filtering:
+     ```
+     Evaluasi untuk 'Minecraft':
+     Precision@5: 80.00%
+     Recall@5: 100.00%
 
-| Model        | RMSE (Train) | MAE (Train) | RMSE (Test) | MAE (Test) |
-|--------------|--------------|-------------|-------------|------------|
-| **XGBoost**  | **244.18**   | **155.74**  | **294.26**  | **174.27** |
-| LightGBM     | 255.45       | 164.98      | 306.81      | 182.42     |
-| SARIMAX      | 461.18       | 286.88      | 714.49      | 651.99     |
+     Evaluasi untuk 'Tekken 7':
+     Precision@5: 100.00%
+     Recall@5: 100.00%
+     ```
+2. Metrik Evaluasi yang digunakan untuk Collaborative Filtering:
+   - MAE (Mean Absolute Error): Mengukur rata-rata kesalahan absolut antara nilai aktual dan nilai prediksi. Metrik ini memberikan gambaran langsung seberapa jauh prediksi model dari data sebenarnya secara rata-rata.
 
-| Model       | MSE (Train) | MSE (Test) |
-| ----------- | ----------- | ---------- |
-| **XGBoost** | **59.62**   | **86.59**  |
-| LightGBM    | 65.26       | 94.13      |
-| SARIMAX     | 212.69      | 510.49     |
-
-**Interpretasi**:
-
-- XGBoost memberikan hasil prediksi terbaik dengan error terendah untuk seluruh metrik (RMSE, MAE, dan MSE).
-- SARIMAX digunakan sebagai baseline, namun performanya jauh tertinggal.
-- Model tree-based (XGBoost dan LightGBM) mampu menangkap kompleksitas hubungan non-linier antar fitur.
-
+     $$\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|$$
+     
+   - RMSE (Root Mean Squared Error): RMSE memberikan penalti lebih besar untuk kesalahan prediksi yang besar karena mengkuadratkan selisih prediksi dan aktual.
+Metrik ini sangat berguna untuk membandingkan performa model secara keseluruhan.
+  
+     $$\text{RMSE} = \sqrt{ \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 }$$
+     
+   - Berikut hasil yang diperoleh dari evaluasi model Collaborative Filtering:
+     ```
+     RMSE: 0.7554
+     Root Mean Squared Error (RMSE): 0.7553650276541048
+     MAE:  0.6192
+     Mean Absolute Error (MAE): 0.619192493166767
+     ```
 **Referensi**:
