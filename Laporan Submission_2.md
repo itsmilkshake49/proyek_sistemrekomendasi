@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**Latar Belakang**: Dalam era digital saat ini, masyarakat dihadapkan dengan informasi berlimpah, termasuk dalam industri game yang sangat kompetitif. Jumlah game yang terus bertambah membuat pengguna kesulitan memilih game yang sesuai dengan preferensi mereka. Seiring meningkatnya jumlah judul game yang tersedia di berbagai platform digital seperti Steam, PlayStation Store, dan Xbox Marketplace, pengguna sering kali kesulitan memilih game yang sesuai dengan preferensi mereka. Studi menunjukkan bahwa lebih dari 60% pengguna mengandalkan sistem rekomendasi untuk menemukan game baru yang menarik[^1]. 
+**Latar Belakang**: Dalam era digital saat ini, masyarakat dihadapkan dengan informasi berlimpah, termasuk dalam industri game yang sangat kompetitif. Seiring meningkatnya jumlah judul game yang tersedia di berbagai platform digital seperti Steam, PlayStation Store, dan Xbox Marketplace, pengguna sering kali kesulitan memilih game yang sesuai dengan preferensi mereka. Studi menunjukkan bahwa lebih dari 60% pengguna mengandalkan sistem rekomendasi untuk menemukan game baru yang menarik[^1]. 
 
 **Pentingnya proyek diselesaikan**: Tanpa sistem rekomendasi yang baik, pengguna akan mengalami information overload dan kesulitan dalam menemukan game yang relevan. Ini berdampak pada pengalaman pengguna secara keseluruhan dan mengurangi engagement. Pendekatan sistem rekomendasi berbasis data menjadi solusi penting, dengan menerapkan dua teknik populer dalam domain ini, yaitu Collaborative Filtering dan Content-Based Filtering, sistem dapat memberikan saran yang lebih akurat dan personal. Rekomendasi personal tidak hanya meningkatkan kepuasan pengguna, tetapi juga berdampak pada loyalitas dan retensi pengguna pada platform digital[^2].
 
@@ -36,7 +36,7 @@ Sumber Data: [Kaggle Dataset](https://www.kaggle.com/datasets/jahnavipaliwal/vid
     - `User Rating` : Penilaian dari pengguna (sebelum penyekalaan: 10-50)
       
 ### Kondisi Data Awal
-- - Missing Values di deteksi dengan `df.isnull().sum()` dan diperoleh bahwa pada dataset tidak terdapat Missing Values
+- Missing Values di deteksi dengan `df.isnull().sum()` dan diperoleh bahwa pada dataset tidak terdapat Missing Values
 - Data duplikat di deteksi dengan `df.duplicated().sum())` dan diperoleh bahwa tidak terdapat Data Duplikat
 
 ### Exploratory Data Analysis and Visualization:
@@ -52,7 +52,7 @@ Langkah-langkah Data Preparation:
 2. Menyiapkan data untuk Content-Based Filtering dengan melakukan:
    - Mengambil variabel `Game Title` dan `Genre` untuk menjadi dataframe `cbf_df`
    - Melakukan vektorisasi untuk variabel `Genre` dengan mengubahnya menjadi bentuk matriks, tahap ini dilakukan agar variabel kategorikal dapat terbaca mesin
-4. Menyiapkan data untuk Collaborative Filtering dengan melakukan:
+3. Menyiapkan data untuk Collaborative Filtering dengan melakukan:
    - Menggunakan index sebagai `userID` karena tidak terdapat ID pengguna dari data awal
    - Mengambil variabel `userID`, `Game Title`, `User Rating`, dan `Genre` untuk menjadi `cf_df`
    - Mengubah dataframe menjadi objek dataset `Surprise`
