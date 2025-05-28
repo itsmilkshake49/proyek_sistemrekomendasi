@@ -70,11 +70,11 @@ Model yang Digunakan:
 2. Collaborative Filtering:
    -  Pendekatan ini menggunakan algoritma Singular Value Decomposition (SVD) dari pustaka Surprise. Model dilatih menggunakan data rating pengguna terhadap game. Sistem ini mempelajari pola dari pengguna yang memberikan rating serupa, lalu merekomendasikan item yang disukai oleh pengguna dengan preferensi serupa.
    -  Kelebihan:
-     -  Dapat menangkap hubungan kompleks antar pengguna dan item.
-     -  Tidak memerlukan metadata dari item seperti genre atau deskripsi.
+      -  Dapat menangkap hubungan kompleks antar pengguna dan item.
+      -  Tidak memerlukan metadata dari item seperti genre atau deskripsi.
    -  Kekurangan:
-     - Tidak bekerja baik untuk pengguna atau item baru (cold-start problem).
-     - Bergantung pada jumlah interaksi yang cukup untuk belajar pola.
+      - Tidak bekerja baik untuk pengguna atau item baru (cold-start problem).
+      - Bergantung pada jumlah interaksi yang cukup untuk belajar pola.
 
 **Output Top-N Recommendation**:
 1. Content-Based Filtering:
@@ -131,7 +131,7 @@ print(rekomendasi_user_331`) berdasarkan rating:
      $$\text{Precision@k} = \frac{1}{k} \sum_{i=1}^{k} \text{cosine\_sim}(input, item_i)$$
      
      Semakin tinggi nilai precision, semakin akurat rekomendasi terhadap preferensi konten dari game input.
-   - **Recall@k** : Mengukur seberapa besar proporsi kemiripan yang berhasil ditangkap dari total kemiripan semua hasil. Ini menggambarkan sejauh mana rekomendasi mencakup konten yang mirip dengan game input.
+   - **Recall** : Mengukur seberapa besar proporsi kemiripan yang berhasil ditangkap dari total kemiripan semua hasil. Ini menggambarkan sejauh mana rekomendasi mencakup konten yang mirip dengan game input.
      
      $$\text{Recall@k} = \frac{ \sum_{i=1}^{k} \text{cosine\_sim}(input, item_i) }{ \sum_{j=1}^{n} \text{cosine\_sim}(input, item_j) }$$
      
@@ -147,11 +147,11 @@ print(rekomendasi_user_331`) berdasarkan rating:
      Recall@5: 100.00%
      ```
 2. Metrik Evaluasi yang digunakan untuk Collaborative Filtering:
-   - MAE (Mean Absolute Error): Mengukur rata-rata kesalahan absolut antara nilai aktual dan nilai prediksi. Metrik ini memberikan gambaran langsung seberapa jauh prediksi model dari data sebenarnya secara rata-rata.
+   - **MAE (Mean Absolute Error)** : Mengukur rata-rata kesalahan absolut antara nilai aktual dan nilai prediksi. Metrik ini memberikan gambaran langsung seberapa jauh prediksi model dari data sebenarnya secara rata-rata.
 
      $$\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|$$
      
-   - RMSE (Root Mean Squared Error): RMSE memberikan penalti lebih besar untuk kesalahan prediksi yang besar karena mengkuadratkan selisih prediksi dan aktual.
+   - **RMSE (Root Mean Squared Error)** : RMSE memberikan penalti lebih besar untuk kesalahan prediksi yang besar karena mengkuadratkan selisih prediksi dan aktual.
 Metrik ini sangat berguna untuk membandingkan performa model secara keseluruhan.
   
      $$\text{RMSE} = \sqrt{ \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 }$$
