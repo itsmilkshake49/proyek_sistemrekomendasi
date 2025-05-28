@@ -159,10 +159,8 @@ Metrik ini sangat berguna untuk membandingkan performa model secara keseluruhan.
      
    - Berikut hasil yang diperoleh dari evaluasi model Collaborative Filtering:
      ```
-     RMSE: 0.7554
-     Root Mean Squared Error (RMSE): 0.7553650276541048
-     MAE:  0.6192
-     Mean Absolute Error (MAE): 0.619192493166767
+     Root Mean Squared Error (RMSE): 0.7554
+     Mean Absolute Error (MAE): 0.6192
      ```
      Interpretasi: Nilai RMSE dan MAE yang rendah menunjukkan bahwa model collaborative filtering memiliki performa prediksi yang cukup baik. Model dapat digunakan secara **efektif untuk memperkirakan preferensi pengguna** terhadap game yang belum mereka rating. Namun model masih bisa ditingkatkan dengan pendekatan lain seperti hybrid untuk mengatasi cold-start.
      
