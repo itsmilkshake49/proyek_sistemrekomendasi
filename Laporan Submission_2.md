@@ -5,8 +5,7 @@
 **Latar Belakang**: Dalam era digital saat ini, masyarakat dihadapkan dengan informasi berlimpah, termasuk dalam industri game yang sangat kompetitif. Seiring meningkatnya jumlah judul game yang tersedia di berbagai platform digital seperti Steam, PlayStation Store, dan Xbox Marketplace, pengguna sering kali kesulitan memilih game yang sesuai dengan preferensi mereka. Studi menunjukkan bahwa lebih dari 60% pengguna mengandalkan sistem rekomendasi untuk menemukan game baru yang menarik[^1]. 
 
 **Pentingnya proyek diselesaikan**: Tanpa sistem rekomendasi yang baik, pengguna akan mengalami information overload dan kesulitan dalam menemukan game yang relevan. Ini berdampak pada pengalaman pengguna secara keseluruhan dan mengurangi engagement. Pendekatan sistem rekomendasi berbasis data menjadi solusi penting, dengan menerapkan dua teknik populer dalam domain ini, yaitu Collaborative Filtering dan Content-Based Filtering, sistem dapat memberikan saran yang lebih akurat dan personal. Rekomendasi personal tidak hanya meningkatkan kepuasan pengguna, tetapi juga berdampak pada loyalitas dan retensi pengguna pada platform digital[^2].
-
-**Referensi**:  
+ 
 [^1]: Park, Y. J., & Chang, H. J. (2009). "Individual and Group Behavior-Based Customer Profile Model for Personalized Product Recommendation." Expert Systems with Applications, 36(2), 1932–1939. 
 [^2]: Jannach, D., & Adomavicius, G. (2016). Recommendation systems: Challenges, insights and research opportunities. ACM Computing Surveys, 49(4), 1–34.
 
