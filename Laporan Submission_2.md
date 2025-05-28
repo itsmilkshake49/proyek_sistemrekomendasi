@@ -128,12 +128,12 @@ print(rekomendasi_user_331`) berdasarkan rating:
 1. Metrik Evaluasi yang digunakan untuk Content-Based Filtering:
    - **Precision** : Mengukur seberapa relevan item yang direkomendasikan dari sejumlah `k` rekomendasi teratas. Dalam konteks ini, skor cosine similarity digunakan sebagai ukuran relevansi.
      
-     $$\text{Precision@k} = \frac{1}{k} \sum_{i=1}^{k} \text{cosine\_sim}(input, item_i)$$
+     $$\text{Precision@k} = \frac{1}{k} \sum_{i=1}^{k} \cos(\vec{x}, \vec{y_i})$$
      
      Semakin tinggi nilai precision, semakin akurat rekomendasi terhadap preferensi konten dari game input.
    - **Recall** : Mengukur seberapa besar proporsi kemiripan yang berhasil ditangkap dari total kemiripan semua hasil. Ini menggambarkan sejauh mana rekomendasi mencakup konten yang mirip dengan game input.
      
-     $$\text{Recall@k} = \frac{ \sum_{i=1}^{k} \text{cosine\_sim}(input, item_i) }{ \sum_{j=1}^{n} \text{cosine\_sim}(input, item_j) }$$
+     $$\text{Recall@k} = \frac{ \sum_{i=1}^{k} \cos(\vec{x}, \vec{y_i}) }{ \sum_{j=1}^{n} \cos(\vec{x}, \vec{y_j}) }$$
      
      Jika cosine similarity dari semua hasil sangat tersebar, maka recall membantu memahami seberapa besar bagian dari konten relevan yang berhasil direkomendasikan.
    - Berikut hasil yang diperoleh dari evaluasi model Content-Based Filtering:
