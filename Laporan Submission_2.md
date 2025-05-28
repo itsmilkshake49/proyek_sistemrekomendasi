@@ -1,89 +1,82 @@
 # Laporan Proyek Machine Learning - Laetisha Haryanto
 
-## Domain Proyek
+## Project Overview
 
-**Latar Belakang**: Kepadatan lalu lintas merupakan permasalahan signifikan dalam sistem transportasi kota, terutama pada jalan raya utama seperti Interstate-94 (I-94) di negara Amerika Serikat. Volume lalu lintas yang tinggi dapat menyebabkan kemacetan, meningkatkan polusi, serta memperpanjang waktu tempuh perjalanan. 
+**Latar Belakang**: Dalam era digital saat ini, masyarakat dihadapkan dengan informasi berlimpah, termasuk dalam industri game yang sangat kompetitif. Jumlah game yang terus bertambah membuat pengguna kesulitan memilih game yang sesuai dengan preferensi mereka. Seiring meningkatnya jumlah judul game yang tersedia di berbagai platform digital seperti Steam, PlayStation Store, dan Xbox Marketplace, pengguna sering kali kesulitan memilih game yang sesuai dengan preferensi mereka. Studi menunjukkan bahwa lebih dari 60% pengguna mengandalkan sistem rekomendasi untuk menemukan game baru yang menarik[^1]. 
 
-Kemacetan lalu lintas di jalan raya menimbulkan kerugian ekonomi yang mencapai miliaran dolar setiap tahun[^1]. Oleh karena itu, memprediksi volume lalu lintas secara akurat akan sangat membantu dalam pengambilan keputusan untuk manajemen lalu lintas, seperti pengaturan sinyal lalu lintas, pengelolaan jadwal konstruksi, pengoptimalisasi lampu lalu lintas, dan memberi peringatan dini kepada pengguna jalan.  
-
-**Mengapa dan Bagaimana Masalah Diselesaikan**: Manajemen lalu lintas yang buruk dapat berdampak luas ke berbagai faktor dalam suatu negara. Maka, sistem prediktif yang mampu mengestimasi lalu lintas secara akurat dibutuhkan untuk merencanakan manajemen lalu lintas yang lebih tepat. Dengan pendekatan data-driven, solusi ini menjadi lebih terukur dan dapat diintegrasikan dalam sistem transportasi[^2]. 
+**Pentingnya proyek diselesaikan**: Tanpa sistem rekomendasi yang baik, pengguna akan mengalami information overload dan kesulitan dalam menemukan game yang relevan. Ini berdampak pada pengalaman pengguna secara keseluruhan dan mengurangi engagement. Pendekatan sistem rekomendasi berbasis data menjadi solusi penting, dengan menerapkan dua teknik populer dalam domain ini, yaitu Collaborative Filtering dan Content-Based Filtering, sistem dapat memberikan saran yang lebih akurat dan personal. Rekomendasi personal tidak hanya meningkatkan kepuasan pengguna, tetapi juga berdampak pada loyalitas dan retensi pengguna pada platform digital[^2].
 
 **Referensi**:  
-[^1]: Federal Highway Administration. (2020)."Congestion & Reliability." https://ops.fhwa.dot.gov/congestion_report/  
-[^2]: Zheng, Z., et al. (2017). "Urban traffic prediction through transportation data analysis." IEEE Transactions on Big Data.
+[^1]: Park, Y. J., & Chang, H. J. (2009). "Individual and Group Behavior-Based Customer Profile Model for Personalized Product Recommendation." Expert Systems with Applications, 36(2), 1932–1939. 
+[^2]: Jannach, D., & Adomavicius, G. (2016). Recommendation systems: Challenges, insights and research opportunities. ACM Computing Surveys, 49(4), 1–34.
 
 ## Business Understanding
 
 ### Problem Statements
 
-- Volume lalu lintas yang tinggi dan tidak terprediksi menghambat efisiensi manajemen lalu lintas dan menyebabkan kerugian ekonomi
-- Diperlukan pemodelan yang dapat menangkap pola waktu dan pengaruh cuaca terhadap volume lalu lintas untuk membantu pengambilan keputusan berbasis data
+- Pengguna mengalami kesulitan dalam menemukan game yang relevan karena banyaknya pilihan yang tersedia tanpa bantuan sistem rekomendasi
+- Sistem rekomendasi tunggal dengan pendekatan tertentu sering kali menghasilkan rekomendasi yang kurang akurat jika tidak menggabungkan aspek perilaku pengguna dan karakteristik konten game.
 
 ### Goals
 
-Menjelaskan tujuan dari pernyataan masalah:
-- Mengembangkan model prediksi berbasis time series dan machine learning untuk memperkirakan volume lalu lintas di masa mendatang
-- Mengevaluasi dan menentukan model terbaik untuk diterapkan dalam sistem prediksi volume lalu lintas menggunakan data historis dan eksternal
+- Mengembangkan model content-based filtering yang menggunakan informasi genre untuk merekomendasikan game dengan konten serupa yang disukai pengguna.
+- Mengembangkan model collaborative filtering untuk merekomendasikan game berdasarkan pola rating pengguna lain yang serupa.
 
-### Solution statements
-- Menggunakan algoritma SARIMAX sebagai baseline model time series multivariat
-- Menggunakan algorita XGBoost dan LightGBM sebagai model machine learning
-- Melakukan data preprocessing dan feature engineering
-- Evaluasi dengan metrik MSE untuk mengukur secara objektif performa model
+### Solution Approach
+- Content-Based Filtering: Menggunakan pendekatan TF-IDF dan cosine similarity untuk menghitung kemiripan antar game berdasarkan genre, dan merekomendasikan game yang paling mirip dengan yang pernah disukai pengguna.
+- Collaborative Filtering: Menggunakan algoritma SVD (Singular Value Decomposition) dari pustaka Surprise untuk mempelajari interaksi user–item dan menghasilkan rekomendasi berdasarkan pola rating serupa antar pengguna.
 
 ## Data Understanding
-Sumber Data: [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/492/metro+interstate+traffic+volume)
+Sumber Data: [Kaggle Dataset](https://www.kaggle.com/datasets/jahnavipaliwal/video-game-reviews-and-ratings/data)
 
-### Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
-- Terdapat 9 variabel, dengan jumlah data sebanyak 48204
-- Berikut penjelasan setiap variabel:
-    - date_time: waktu pencatatan data (datetime)
-    - holiday: hari libur nasional (kategorik)
-    - temp: suhu rata-rata dalam satuan Kelvin (numerik)
-    - rain_1h: curah hujan/jam dalam satuan mm (numerik)
-    - snow_1h: curah salju/jam dalam satuan mm (numerik)
-    - clouds_all: persentase tutupan awan (numerik)
-    - weather_main: deskripsi cuaca singkat (kategorik)
-    - weather_description: deskripsi cuaca lengkap (kategorik)
-    - traffic_volume: volume lalu lintas per jam dengan satuan kendaraan (numerik)
+### Variabel-variabel pada Video Games Kaggle Dataset adalah sebagai berikut:
+- Terdapat 18 Variabel dan 47774 baris untuk dataset game, namun untuk proyek sistem rekomendasi ini hanya menggunakan 3 variabel sebagai berikut:
+    - `Game Title` : Nama game 
+    - `Genre` : Kategori game (misal: Action, Puzzle)
+    - `User Rating` : Penilaian dari pengguna (sebelum penyekalaan: 10-50)
+      
+### Kondisi Data Awal
+- - Missing Values di deteksi dengan `df.isnull().sum()` dan diperoleh bahwa pada dataset tidak terdapat Missing Values
+- Data duplikat di deteksi dengan `df.duplicated().sum())` dan diperoleh bahwa tidak terdapat Data Duplikat
 
 ### Exploratory Data Analysis and Visualization:
-- ![Rata-rata lalu lintas berdasarkan hari libur](https://drive.google.com/uc?export=view&id=1N1XU7W1hpPOjqVp__RxBcVvfHhZ8v-jy)  
-Berdasarkan plot, rata-rata kepadatan lalu lintas terbanyak terjadi ketika libur Tahun Baru yang mencapai hampir 1500 kendaraan setiap jam
-- ![Distribusi volume lalu lintas](https://drive.google.com/uc?export=view&id=158Ehujk0s68yvgmHuIEHY4GM6hB4KMgj)
-Berdasarkan plot distribusi, volume lalu lintas bersifat multimodal dimana terdapat beberapa puncak yang mengindikasikan waktu-waktu tertentu seperti jam sibuk pagi atau sore hari  
-- ![Korelasi antar fitur numerik](https://drive.google.com/uc?export=view&id=1lOvGcGhBM3xMj8fhkO9k7SfYn9GpLCv8)
-Berdasarkan heatmap, korelasi antar fitur numerik sangat lemah terhadap volume lalu lintas (traffic_volume)
+- ![Wordcloud Genre](https://drive.google.com/uc?export=view&id=1Qg-O-iH0IP28kGJjsDR5CIHXm8VnfdtC)  
+Berdasarkan plot, 3 Genre Game terbanyak yaitu **Strategy**, **Shooter**, dan **RPG**
+- ![Distribusi Variabel Rating](https://drive.google.com/uc?export=view&id=1qRKInLADStH0HsZ2ckFwZ8siwXtNhy9u)
+Berdasarkan plot, terdapat lebih dari 3000 game yang memiliki rating sekitar 30. Kemudian rentang ratingnya dari 10-50 sedikit janggal, maka dibutuhkan penyekalaan ulang menjadi 1-5
 
 
 ## Data Preparation
 Langkah-langkah Data Preparation:
-1. Membuat `date_time` menjadi index dan ekstraksi fitur waktu seperti jam, hari, bulan, dan tahun. Langkah ini dilakukan karena analisis yang digunakan berbasis time series
-2. Mengecek missing values, dan tidak terdapat missing values
-3. Mendeteksi data duplikat, dan melakukan penanganan dengan menghapus data duplikat. Langkah ini dilakukan untuk mencegah bias pada model dan overfitting, mengurangi generalisasi
-4. Deteksi outlier dan penanganan dengan imputasi, interpolasi berbasis waktu untuk variabel `temp`, `rain_1h`, dan `snow_1h`. Langkah ini dilakukan karena model time series sangat sensitif terhadap outlier, perlu ditangani untuk meningkatkan akurasi model
-5. Feature engineering dengan melakukan lag features dan cyclical encoding. Langkah ini dilakukan agar model dapat menangkap pola waktu lebih baik, lag features akan menambahkan memori ke model mengenai yang terjadi sebelumnya, dan cyclical encoding akan memberi informasi kepada model bahwa waktu itu berulang
-6. Menghapus variabel yang kurang relevan untuk analisis ini, yaitu `weather_description` yang hanya berupa penjelasan lebih panjang dari `weather_main`
-7. Encoding fitur kategorikal (`holiday`, `weather_main`) dengan One-Hot Encoding. Dilakukan karena model tidak bisa menangani data bertipe kategori, maka harus dikonversi menjadi numerik terlebih dahulu
-8. Standardisasi dilakukan setelah split data menjadi train dan test. Langkah ini dilakukan karena model machine learning sensitif terhadap skala fitur, dan untuk menghindari data leakage maka standardisasi dilakukan setelah split data
-
+1. Melakukan penyekalaan variabel `User Rating` dari 10-50 menjadi 1-5 agar lebih umum
+2. Menyiapkan data untuk Content-Based Filtering dengan melakukan:
+   - Mengambil variabel `Game Title` dan `Genre` untuk menjadi dataframe `cbf_df`
+   - Melakukan vektorisasi untuk variabel `Genre` dengan mengubahnya menjadi bentuk matriks, tahap ini dilakukan agar variabel kategorikal dapat terbaca mesin
+4. Menyiapkan data untuk Collaborative Filtering dengan melakukan:
+   - Menggunakan index sebagai `userID` karena tidak terdapat ID pengguna dari data awal
+   - Mengambil variabel `userID`, `Game Title`, `User Rating`, dan `Genre` untuk menjadi `cf_df`
+   - Mengubah dataframe menjadi objek dataset `Surprise`
+   - Melakukan split dataset menjadi data latih sebesar 80% dan data uji 20%
+     
 ## Modeling
 Model yang Digunakan:
-1. SARIMAX (Seasonal ARIMA with Exogenous Variables):
-- Model baseline yang mempertimbangkan komponen musiman dan pengaruh variabel cuaca.
-- Digunakan sebagai pembanding model machine learning.
-- Kelebihan: Dapat menangkap tren dan musiman eksplisit.
-- Kekurangan: Kurang fleksibel dalam menangani data non-stasioner dan non-linear.
-2. XGBoost Regressor:
-- Model boosting berbasis pohon keputusan dengan performa tinggi.
-- Kelebihan: Menangani missing value, non-linearitas, dan pentingnya fitur.
-- Kekurangan: Lebih lambat dibanding LightGBM untuk dataset besar.
-3. LightGBM Regressor:
-- Alternatif boosting dengan kecepatan pelatihan lebih tinggi.
-- Kelebihan: Lebih cepat dari XGBoost, efisien untuk dataset besar.
-- Kekurangan: Sensitif terhadap outlier jika tidak ditangani sebelumnya.  
+1. Content-Based Filtering:
+   - Pendekatan ini memberikan rekomendasi berdasarkan kemiripan konten game (dalam proyek ini genre), menggunakan cosine similarity. Jika seorang pengguna menyukai game dengan genre tertentu, sistem akan merekomendasikan game lain dengan genre yang mirip.
+   - Kelebihan:
+     - Bekerja dengan baik untuk item baru yang belum memiliki interaksi pengguna.
+     - Dapat memberikan rekomendasi yang dapat dijelaskan (misalnya berdasarkan genre).
+   - Kekurangan:
+     - Rekomendasi terbatas pada konten yang mirip, sehingga cenderung kurang bervariasi.
+     - Tidak menangkap pola kolaboratif antar pengguna.
+2. Collaborative Filtering:
+   -  Pendekatan ini menggunakan algoritma Singular Value Decomposition (SVD) dari pustaka Surprise. Model dilatih menggunakan data rating pengguna terhadap game. Sistem ini mempelajari pola dari pengguna yang memberikan rating serupa, lalu merekomendasikan item yang disukai oleh pengguna dengan preferensi serupa.
+   -  Kelebihan:
+     -  Dapat menangkap hubungan kompleks antar pengguna dan item.
+     -  Tidak memerlukan metadata dari item seperti genre atau deskripsi.
+   -  Kekurangan:
+     - Tidak bekerja baik untuk pengguna atau item baru (cold-start problem).
+     - Bergantung pada jumlah interaksi yang cukup untuk belajar pola.
 
-**Model Terbaik**: XGBoost terpilih sebagai model terbaik berdasarkan metrik MSE, dan memberi prediksi yang paling mendekati nilai sesungguhnya
 
 ## Evaluation
 Metrik Evaluasi yang digunakan:
