@@ -29,10 +29,26 @@
 Sumber Data: [Kaggle Dataset](https://www.kaggle.com/datasets/jahnavipaliwal/video-game-reviews-and-ratings/data)
 
 ### Variabel-variabel pada Video Games Kaggle Dataset adalah sebagai berikut:
-- Terdapat 18 Variabel dan 47774 baris untuk dataset game, namun untuk proyek sistem rekomendasi ini hanya menggunakan 3 variabel sebagai berikut:
-    - `Game Title` : Nama game 
+- Terdapat 18 Variabel dan 47774 baris untuk dataset game, berikut penjelasan setiap variabel:
+    - `Game Title` : Nama game
+    - `User Rating` : Penilaian numerik dari pengguna (sebelum penyekalaan: 10-50)
+    - `Age Group Targeted` : Kelompok usia yang menjadi target game (misal: Adult, All Ages)
+    - `Price` : Harga ritel game dalam USD saat pembelian
+    - `Platform` : Tempat game tersedia (misal: Playstation, Xbox)
+    - `Requires Special Device` : Apakah game membutuhkan perangkat khusus
+    - `Developer` : Nama studio atau perusahaan yang mengembangkan game
+    - `Publisher` : Perusahaan yang merilis atau memasarkan game
+    - `Release Year` : Tahun rilis game
     - `Genre` : Kategori game (misal: Action, Puzzle)
-    - `User Rating` : Penilaian dari pengguna (sebelum penyekalaan: 10-50)
+    - `Multiplayer` : Apakah game mendukung mode multiplayer
+    - `Game Length (Hours)` : Estimasi rata-rata durasi waktu bermain (dalam jam)
+    - `Graphics Quality` : Penilaian kualitas grafis game berdasarkan persepsi pengguna
+    - `Soundtrack Quality` : Penilaian kualitas musik dan audio game
+    - `Story Quality` : Penilaian terhadap alur cerita atau narasi game
+    - `User Review Text` : Ringkasan ulasan pengguna dalam bentuk teks
+    - `Game Mode` : Game dimainkan secara Online atau Offline
+    - `Min Number of Players` : Jumlah minimum pemain yang dibutuhkan untuk memainkan game
+- Pada proyek ini, hanya menggunakan 3 variabel yaitu `Game Title`, `User Rating`, dan `Genre`
       
 ### Kondisi Data Awal
 - Missing Values di deteksi dengan `df.isnull().sum()` dan diperoleh bahwa pada dataset tidak terdapat Missing Values
@@ -49,6 +65,7 @@ Berdasarkan plot, terdapat lebih dari 3000 game yang memiliki rating sekitar 30.
 Langkah-langkah Data Preparation:
 1. Melakukan penyekalaan variabel `User Rating` dari 10-50 menjadi 1-5 agar lebih umum
 2. Menyiapkan data untuk Content-Based Filtering dengan melakukan:
+   - Menghapus duplikat berdasarkan `Game Title` dengan `cbf.drop_duplicates(subset='Game Title').reset_index(drop=True)` sehingga diperoleh 40 game unik yang digunakan untuk vektorisasi
    - Mengambil variabel `Game Title` dan `Genre` untuk menjadi dataframe `cbf_df`
    - Melakukan vektorisasi untuk variabel `Genre` dengan mengubahnya menjadi bentuk matriks, tahap ini dilakukan agar variabel kategorikal dapat terbaca mesin
 3. Menyiapkan data untuk Collaborative Filtering dengan melakukan:
