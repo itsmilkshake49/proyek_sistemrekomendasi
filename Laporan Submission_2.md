@@ -55,9 +55,9 @@ Sumber Data: [Kaggle Dataset](https://www.kaggle.com/datasets/jahnavipaliwal/vid
 - Data duplikat di deteksi dengan `df.duplicated().sum())` dan diperoleh bahwa tidak terdapat Data Duplikat
 
 ### Exploratory Data Analysis and Visualization:
-- ![Wordcloud Genre](https://drive.google.com/uc?export=view&id=1Qg-O-iH0IP28kGJjsDR5CIHXm8VnfdtC)  
+- ![wordcloud](https://github.com/user-attachments/assets/7d1eec0a-33ac-4b58-ab8d-0d4ec93aa343)
 Berdasarkan plot, 3 Genre Game terbanyak yaitu **Strategy**, **Shooter**, dan **RPG**
-- ![Distribusi Variabel Rating](https://drive.google.com/uc?export=view&id=1qRKInLADStH0HsZ2ckFwZ8siwXtNhy9u)
+- ![distribusi_rating](https://github.com/user-attachments/assets/397e2729-8ed7-45b5-8eeb-e604f7ac4a43)
 Berdasarkan plot, terdapat lebih dari 3000 game yang memiliki rating sekitar 30. Kemudian rentang ratingnya dari 10-50 sedikit janggal, maka dibutuhkan penyekalaan ulang menjadi 1-5
 
 
